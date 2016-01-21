@@ -48,6 +48,13 @@ class NMXComs {
 	}	
 	
 	/**
+	 * @return Whether NMX serial detail debug is enabled;
+	 */
+	public static boolean getSerialDetail(){
+		return serialDetail;
+	}	
+	
+	/**
 	 * Sets how long the command thread should wait before trying to fetch a response packet
 	 * @param millis Time in milliseconds
 	 */
