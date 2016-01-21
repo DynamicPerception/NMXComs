@@ -821,6 +821,14 @@ public class Command<T, D> {
 		return this.type;
 	}
 	
+	public Class<?> getReturnType(){
+		return returnType;
+	}
+	
+	public Class<?> getDataType(){
+		return dataType;
+	}
+	
 	public int getCommandNum(){
 		return this.command;
 	}
