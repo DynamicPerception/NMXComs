@@ -1,3 +1,4 @@
+package com.dynamicperception.nmx;
 class NMXComs {
 	
 	private static final int ERROR = (int) -1e9;

@@ -1,3 +1,4 @@
+package com.dynamicperception.nmx;
 /* -*- mode: java; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 
 /*
@@ -23,6 +24,7 @@ import gnu.io.CommPortIdentifier;
 import java.lang.reflect.*;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import jssc.*;
 
 

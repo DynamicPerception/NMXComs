@@ -1,3 +1,4 @@
+package com.dynamicperception.nmx;
 class ThreadManagement {
 	
 	public static void message(String message) {
