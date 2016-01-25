@@ -75,8 +75,8 @@ class NMXComs {
 	}
 	
 	/**
-	 * This differs from the isSendingCommand() method in that isBusy() returns true once 
-	 * the command has starting being processed, while isSendingCommand() returns true only once 
+	 * This differs from the {@link #isSendingCommand()} method in that isBusy() returns true once 
+	 * the command has starting being processed, while {@link #isSendingCommand()} returns true only once 
 	 * the command thread has been flagged and has started sending the command to the controller.
 	 * 
 	 * @return Whether the command sending process is in process. T
@@ -86,7 +86,7 @@ class NMXComs {
 	}
 
 	/** 
-	 * See isBusy() Javadoc for more clarification
+	 * See {@link #isBusy()}() for more clarification
 	 * @return Whether the command thread is busy
 	 */
 	public static boolean isSendingCommand(){
