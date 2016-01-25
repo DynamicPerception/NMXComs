@@ -919,7 +919,7 @@ public class Command {
 		}
 		// Void return type
 		else{			
-			ret = (T) Void.class.cast(response);
+			ret = (T) Void.class.cast(null);
 		}
 		
 		// Print debug if necessary
