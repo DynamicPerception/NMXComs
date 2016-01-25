@@ -24,8 +24,6 @@ public class Command {
 	private int dataLength;
 	private Class<?> returnType;	
 	private HelpCommand helpCommand;
-	private PreCommand preCommand;
-	private PostCommand postCommand;
 	
 	public void help(){
 		helpCommand.helpCommand();
@@ -37,22 +35,6 @@ public class Command {
 	
 	public static interface HelpCommand{
 		public void helpCommand();
-	}
-	
-	public static interface PreCommand{
-		public String run(int subAddr, String dataStr);		
-	}
-	
-	public void setPreCommand(PreCommand pre){
-		this.preCommand = pre;
-	}
-	
-	public static interface PostCommand{
-		public int run(int subAddr, float returnVal);
-	}
-	
-	public void setPostCommand(PostCommand post){
-		this.postCommand = post;
 	}
 	
 	/**
@@ -343,14 +325,12 @@ public class Command {
 	 * @param command Command number; must correspond to switch case number in NMX firmware.
 	 * @param name	Name of the command as a String
 	 */
-	private Command(Command.Type type, int command, String name){		
+	protected Command(Command.Type type, int command, String name){		
 		this.init(type, command, Void.class, name, Void.class);
 	}	
 	
 	private void init(Command.Type type, int command, Class<?> returnType, String name, Class<?> dataType){
 		this.helpCommand = null;
-		this.preCommand = null;
-		this.postCommand = null;
 		this.name = name;
 		this.type = type;
 		this.command = command;			
@@ -383,7 +363,7 @@ public class Command {
 		}
 		this.helpCommand = new DefaultHelp(this);
 	}
-
+	
 	
 	/* Static Methods */
 	
@@ -891,11 +871,7 @@ public class Command {
 			System.out.println("This command does not send additional data");			
 			throw new UnsupportedOperationException();
 		}
-		
-		// Do any pre-command action
-		if(preCommand != null)
-			preCommand.run(subAddr, dataStr);
-		
+
 		// Parse the data, if necessary
 		int data = 0;		
 		if(hasData){			
@@ -915,9 +891,7 @@ public class Command {
 				System.out.println("Parsed int: " + data);
 			}
 		}		
-	
-		//System.out.println("Command out: " + addr + " " + subaddr + " " + command + " " + dataLength + " " + data);
-		
+			
 		// Send the command to the NMX
 		if(hasData){			
 			NMXComs.cmd(addr, subaddr, command, dataLength, data);
@@ -928,21 +902,24 @@ public class Command {
 		
 		// Wait for the NMX to clear
 		waitForNMX();	
-		
+				
+		// Do any post command action or manipulation of the return value
+		int response = NMXComs.getResponseVal();
+
 		// Cast the return value to the proper response type
 		T ret = null;
 		if(returnType == Integer.class){
-			ret = (T) returnType.cast(NMXComs.getResponseVal());
+			ret = (T) returnType.cast(response);
 		}
 		else if(returnType == Float.class){			
-			ret = (T) returnType.cast((float) NMXComs.getResponseVal() / FLOAT_CONVERSION);
+			ret = (T) returnType.cast((float) response / FLOAT_CONVERSION);
 		}
 		else if(returnType == Boolean.class){
-			ret = (T) returnType.cast(NMXComs.getResponseVal() == 0 ? false : true);			
+			ret = (T) returnType.cast(response == 0 ? false : true);			
 		}
 		// Void return type
 		else{			
-			ret = (T) Void.class.cast(ret);
+			ret = (T) Void.class.cast(response);
 		}
 		
 		// Print debug if necessary
@@ -953,11 +930,6 @@ public class Command {
 			System.out.println(ret);
 		else
 			System.out.println("OK!");
-		
-		// Do any post command action
-		if(postCommand != null){
-			ret = (T) returnType.cast(postCommand.run(subAddr, Float.class.cast(ret)));
-		}		
 		
 		// Return the value
 		return ret;
