@@ -827,6 +827,7 @@ public class Command {
 	private <T>T executeThis(){
 		if(this.type == Command.Type.MOTOR){
 			System.out.println("This is a motor command; the motor number must be specified to execute");			
+			this.printInfo();
 			throw new UnsupportedOperationException();
 		}
 		else{
@@ -839,6 +840,7 @@ public class Command {
 			int motor = Integer.parseInt(dataOrMotor);
 			if(motor < 0 || motor > MOTOR_COUNT){
 				System.out.println("Invalid motor number");
+				this.printInfo();
 				throw new UnsupportedOperationException();				
 			}
 			int tempSubaddr = motor + 1;
@@ -854,6 +856,7 @@ public class Command {
 			int motorNum = Integer.parseInt(motor);
 			if(motorNum < 0 || motorNum > MOTOR_COUNT){
 				System.out.println("Invalid motor number");
+				this.printInfo();
 				throw new UnsupportedOperationException();				
 			}
 			int tempSubaddr = motorNum + 1;
@@ -861,6 +864,7 @@ public class Command {
 		}	
 		else{
 			System.out.println("This is a non-motor command; a motor number may not be specified");			
+			this.printInfo();
 			throw new UnsupportedOperationException();				
 		} 
 	}
@@ -871,6 +875,7 @@ public class Command {
 		// Notify if data is attached to a command that does not take additional data
 		if(dataLength == 0 && hasData){			
 			System.out.println("This command does not send additional data");			
+			this.printInfo();
 			throw new UnsupportedOperationException();
 		}
 
