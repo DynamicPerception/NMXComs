@@ -255,6 +255,7 @@ public class Command {
 			public static final String GET_ACCEL_AT		= "k.getAccelAt";			
 			public static final String IS_VEL_VALID		= "k.isVelValid";
 			public static final String IS_ACCEL_VALID	= "k.isAccelValid";
+			public static final String GET_CONT_VID_DUR = "k.getContVidDur";
 			public static final String GET_RUN_STATE 	= "k.getRunState";
 			public static final String GET_RUN_TIME		= "k.getRunTime";
 			public static final String GET_MAX_RUN_TIME = "k.getMaxRunTime";
@@ -615,7 +616,8 @@ public class Command {
 		keyFrameList.add(new Command(Command.Type.KEYFRAME, 103, Float.class, Names.KeyFrame.GET_VEL_AT, Float.class));
 		keyFrameList.add(new Command(Command.Type.KEYFRAME, 104, Float.class, Names.KeyFrame.GET_ACCEL_AT, Float.class));
 		keyFrameList.add(new Command(Command.Type.KEYFRAME, 105, Names.KeyFrame.IS_VEL_VALID));
-		keyFrameList.add(new Command(Command.Type.KEYFRAME, 106, Boolean.class, Names.KeyFrame.IS_ACCEL_VALID));		
+		keyFrameList.add(new Command(Command.Type.KEYFRAME, 106, Boolean.class, Names.KeyFrame.IS_ACCEL_VALID));
+		keyFrameList.add(new Command(Command.Type.KEYFRAME, 107, Integer.class, Names.KeyFrame.GET_CONT_VID_DUR));		
 
 		keyFrameList.add(new Command(Command.Type.KEYFRAME, 120, Integer.class, Names.KeyFrame.GET_RUN_STATE));
 		keyFrameList.add(new Command(Command.Type.KEYFRAME, 121, Long.class, Names.KeyFrame.GET_RUN_TIME));
