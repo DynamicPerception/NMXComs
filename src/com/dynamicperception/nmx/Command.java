@@ -909,9 +909,14 @@ public class Command {
 		
 		// Wait for the NMX to clear
 		waitForNMX();	
-				
+					
 		// Do any post command action or manipulation of the return value
-		int response = NMXComs.getResponseVal();
+		int response = 0;
+		
+		// Don't fetch a response if none is expected
+		if(returnType != Void.class){
+			response = NMXComs.getResponseVal();
+		}
 
 		// Cast the return value to the proper response type
 		T ret = null;
